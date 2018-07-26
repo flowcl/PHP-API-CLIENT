@@ -55,8 +55,8 @@ $params = array(
 	"amount" => 5000,
 	"email" => "cliente@gmail.com",
 	"paymentMethod" => 9,
-	"urlConfirmation" => Config::get("BASEURL") . "/example/payments/confirm.php",
-	"urlReturn" => Config::get("BASEURL") ."/example/payments/result.php",
+	"urlConfirmation" => Config::get("BASEURL") . "/examples/payments/confirm.php",
+	"urlReturn" => Config::get("BASEURL") ."/examples/payments/result.php",
 	"optional" => $optional
 );
 //Define el metodo a usar
