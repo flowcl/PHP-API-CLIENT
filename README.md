@@ -1,5 +1,7 @@
 # PHP-API-CLIENT
-Cliente PHP para consumir el API de Flow
+Cliente PHP para consumir el API de Flow.
+
+**Flow.cl** es una pasarela de pagos para comercio electrónico. Este cliente le permite integrar su ecommerce para recibir pagos online.
 
 ## Requerimientos
 * PHP 5.2 o superior
