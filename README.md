@@ -18,7 +18,7 @@ Configure correctamente el cliente en el archivo lib/Config.class.php
 Lo primero que debe configurar es su apiKey y secretKey del comercio registrado en Flow. Esto lo obtiene en la sección **Mis datos** acceda a https://www.flow.cl, una vez autenticado con su cuenta Flow, seleccione Mis datos y recupere su apiKey y secretKey desde la sección Seguridad.
 - **APIKEY** el apiKey obtenida desde su cuenta Flow
 - **SECRETKEY** el secretKey obtinido desde su cuenta Flow
-- **APIURL** la URL del endpoint del API de Flow, Aquí podrá configurar el endpoint de producción o del sandbox. Esta información se obtiene en la documentación del API https://www.flow.cl/docs/api.html
+- **APIURL** la URL del endpoint del API de Flow, Aquí podrá configurar el endpoint de producción o del sandbox. Esta información se obtiene en la documentación del API [https://www.flow.cl/docs/api.html](https://www.flow.cl/docs/api.html){:target="_blank"}
 - **BASEURL** La URL base donde instaló el cliente PHP en su servidor
 
 
