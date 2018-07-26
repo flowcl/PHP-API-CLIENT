@@ -3,7 +3,7 @@
  * Pagina del comercio para recibir la confirmación del pago
  * Flow notifica al comercio del pago efectuado
  */
-require(__DIR__ . "/../lib/FlowApi.class.php");
+require(__DIR__ . "/../../lib/FlowApi.class.php");
 
 try {
 	if(!isset($_POST["token"])) {
