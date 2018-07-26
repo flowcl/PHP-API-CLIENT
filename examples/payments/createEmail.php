@@ -13,8 +13,8 @@ $params = array(
 	"amount" => 2000,
 	"email" => "cliente@gmail.com",
 	"paymentMethod" => 9,
-	"urlConfirmation" => Config::get("BASEURL") . "/payments/confirm.php",
-	"urlReturn" => Config::get("BASEURL") ."/payments/result.php",
+	"urlConfirmation" => Config::get("BASEURL") . "/examples/payments/confirm.php",
+	"urlReturn" => Config::get("BASEURL") ."/examples/payments/result.php",
 	"forward_days_after" => 1,
 	"forward_times" => 2
 );
