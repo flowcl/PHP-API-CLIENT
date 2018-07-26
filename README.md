@@ -53,10 +53,10 @@ $params = array(
 	"subject" => "Pago de prueba",
 	"currency" => "CLP",
 	"amount" => 5000,
-	"email" => "cliente@gmail.com,
+	"email" => "cliente@gmail.com",
 	"paymentMethod" => 9,
-	"urlConfirmation" => Config::get("BASEURL") . "/payments/confirm.php",
-	"urlReturn" => Config::get("BASEURL") ."/payments/result.php",
+	"urlConfirmation" => Config::get("BASEURL") . "/example/payments/confirm.php",
+	"urlReturn" => Config::get("BASEURL") ."/example/payments/result.php",
 	"optional" => $optional
 );
 //Define el metodo a usar
