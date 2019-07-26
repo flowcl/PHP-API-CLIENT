@@ -3,7 +3,7 @@
 /**
  * Clase cliente del Api2 de Flow
  * @Filename: FlowApi.class.php
- * @version: 2.1
+ * @version: 2.0
  * @Author: flow.cl
  * @Email: csepulveda@tuxpan.com
  * @Date: 28-04-2017 11:32
@@ -36,21 +36,27 @@ class FlowApi {
 		$method = strtoupper($method);
 		$url = Config::get("APIURL") . "/" . $service;
 		$params = array("apiKey" => $this->apiKey) + $params;
-		$params["s"] = $this->sign($params);
+		$data = $this->getPack($params, $method);
+		$sign = $this->sign($params);
 		if($method == "GET") {
-			$response = $this->httpGet($url, $params);
+			$response = $this->httpGet($url, $data, $sign);
 		} else {
-			$response = $this->httpPost($url, $params);
+			$response = $this->httpPost($url, $data, $sign);
 		}
 		
 		if(isset($response["info"])) {
 			$code = $response["info"]["http_code"];
-			if (!in_array($code, array("200", "400", "401"))) {
+			$body = json_decode($response["output"], true);
+			if($code == "200") {
+				return $body;
+			} elseif(in_array($code, array("400", "401"))) {
+				throw new Exception($body["message"], $body["code"]);
+			} else {
 				throw new Exception("Unexpected error occurred. HTTP_CODE: " .$code , $code);
 			}
+		} else {
+			throw new Exception("Unexpected error occurred.");
 		}
-		$body = json_decode($response["output"], true);
-		return $body;
 	}
 	
 	/**
@@ -61,6 +67,24 @@ class FlowApi {
 		$this->secretKey = $secretKey;
 	}
 	
+	/**
+	 * Funcion que empaqueta los datos de parametros para ser enviados
+	 * @param array $params datos a ser empaquetados
+	 * @param string $method metodo http a utilizar
+	 */
+	private function getPack($params, $method) {
+		$keys = array_keys($params);
+		sort($keys);
+		$data = "";
+		foreach ($keys as $key) {
+			if($method == "GET") {
+				$data .= "&" . rawurlencode($key) . "=" . rawurlencode($params[$key]);
+			} else {
+				$data .= "&" . $key . "=" . $params[$key];
+			}
+		}
+		return substr($data, 1);
+	}
 	
 	/**
 	 * Funcion que firma los parametros
@@ -72,8 +96,9 @@ class FlowApi {
 		sort($keys);
 		$toSign = "";
 		foreach ($keys as $key) {
-			$toSign .= $key . $params[$key];
+			$toSign .= "&" . $key . "=" . $params[$key];
 		}
+		$toSign = substr($toSign, 1);
 		if(!function_exists("hash_hmac")) {
 			throw new Exception("function hash_hmac not exist", 1);
 		}
@@ -88,8 +113,8 @@ class FlowApi {
 	 * @param string $sign firma de los datos
 	 * @return string en formato JSON 
 	 */
-	private function httpGet($url, $params) {
-		$url = $url . "?" . http_build_query($params);
+	private function httpGet($url, $data, $sign) {
+		$url = $url . "?" . $data . "&s=" . $sign;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -110,12 +135,12 @@ class FlowApi {
 	 * @param string $sign firma de los datos
 	 * @return string en formato JSON 
 	 */
-	private function httpPost($url, $params ) {
+	private function httpPost($url, $data, $sign ) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 		curl_setopt($ch, CURLOPT_POST, TRUE);
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $data . "&s=" . $sign);
 		$output = curl_exec($ch);
 		if($output === false) {
 			$error = curl_error($ch);
