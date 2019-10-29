@@ -46,7 +46,7 @@ class FlowApi {
 		if(isset($response["info"])) {
 			$code = $response["info"]["http_code"];
 			if (!in_array($code, array("200", "400", "401"))) {
-				throw new Exception("Unexpected error occurred. HTTP_CODE: " .$code , $code);
+				throw new Exception("An unexpected HTTP_CODE error occurred: " .$code , $code);
 			}
 		}
 		$body = json_decode($response["output"], true);
@@ -75,7 +75,7 @@ class FlowApi {
 			$toSign .= $key . $params[$key];
 		}
 		if(!function_exists("hash_hmac")) {
-			throw new Exception("function hash_hmac not exist", 1);
+			throw new Exception("hash_hmac function does not exist", 1);
 		}
 		return hash_hmac('sha256', $toSign , $this->secretKey);
 	}

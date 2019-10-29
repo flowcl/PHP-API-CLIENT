@@ -7,7 +7,7 @@ require(__DIR__ . "/../../lib/FlowApi.class.php");
 
 try {
 	if(!isset($_POST["token"])) {
-		throw new Exception("No se recibio el token", 1);
+		throw new Exception("Token expected from flow.cl platform", 1);
 	}
 	$token = filter_input(INPUT_POST, 'token');
 	$params = array(

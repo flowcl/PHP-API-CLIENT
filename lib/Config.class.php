@@ -22,7 +22,7 @@
 	static function get($name) {
 		global $COMMERCE_CONFIG;
 		if(!isset($COMMERCE_CONFIG[$name])) {
-			throw new Exception("The configuration element thas not exist", 1);
+			throw new Exception("The configuration element does not exist", 1);
 		}
 		return $COMMERCE_CONFIG[$name];
 	}
