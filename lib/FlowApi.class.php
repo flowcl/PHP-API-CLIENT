@@ -31,6 +31,7 @@ class FlowApi {
 	 * @param array $params datos a ser enviados
 	 * @param string $method metodo http a utilizar
 	 * @return string en formato JSON
+	 * @throws Exception
 	 */
 	public function send( $service, $params, $method = "GET") {
 		$method = strtoupper($method);
@@ -55,6 +56,8 @@ class FlowApi {
 	
 	/**
 	 * Funcion para setear el apiKey y secretKey y no usar los de la configuracion
+	 * @param string $apiKey apiKey del cliente
+	 * @param string $secretKey secretKey del cliente 
 	 */
 	public function setKeys($apiKey, $secretKey) {
 		$this->apiKey = $apiKey;
@@ -66,6 +69,7 @@ class FlowApi {
 	 * Funcion que firma los parametros
 	 * @param string $params Parametros a firmar
 	 * @return string de firma
+	 * @throws Exception
 	 */
 	private function sign($params) {
 		$keys = array_keys($params);
@@ -84,9 +88,9 @@ class FlowApi {
 	/**
 	 * Funcion que hace el llamado via http GET
 	 * @param string $url url a invocar
-	 * @param array $data datos a enviar
-	 * @param string $sign firma de los datos
-	 * @return string en formato JSON 
+	 * @param array $params los datos a enviar
+	 * @return array el resultado de la llamada
+	 * @throws Exception
 	 */
 	private function httpGet($url, $params) {
 		$url = $url . "?" . http_build_query($params);
@@ -106,9 +110,9 @@ class FlowApi {
 	/**
 	 * Funcion que hace el llamado via http POST
 	 * @param string $url url a invocar
-	 * @param array $data datos a enviar
-	 * @param string $sign firma de los datos
-	 * @return string en formato JSON 
+	 * @param array $params los datos a enviar
+	 * @return array el resultado de la llamada
+	 * @throws Exception
 	 */
 	private function httpPost($url, $params ) {
 		$ch = curl_init();
